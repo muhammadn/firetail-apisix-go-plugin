@@ -32,14 +32,14 @@ func (p *Firetail) ParseConf(in []byte) (interface{}, error) {
         return conf, err
 }
 
-func (p *Firetail) Filter(conf interface{}, res http.ResponseWriter, req pkgHTTP.Request) {
+func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req pkgHTTP.Request) {
 	firetailMiddleware, err := firetail.GetMiddleware(&firetail.Options{
 		OpenapiSpecPath:          "./appspec.yml",
 		LogsApiToken:             "",
 		LogsApiUrl:               "",
 		DebugErrs:                true,
-		EnableRequestValidation:  false,
-		EnableResponseValidation: true,
+		EnableRequestValidation:  true,
+		EnableResponseValidation: false,
 	})
 
 	if err != nil {
