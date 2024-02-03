@@ -56,23 +56,14 @@ func (p *Firetail) ParseConf(in []byte) (interface{}, error) {
         return conf, err
 }
 
-<<<<<<< HEAD
 func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req pkgHTTP.Request) {
-=======
-func (p *Firetail) Filter(conf interface{}, res http.ResponseWriter, req pkgHTTP.Request) {
->>>>>>> e316dd2 (WIP)
 	firetailMiddleware, err := firetail.GetMiddleware(&firetail.Options{
 		OpenapiSpecPath:          "./appspec.yml",
 		LogsApiToken:             "",
 		LogsApiUrl:               "",
 		DebugErrs:                true,
-<<<<<<< HEAD
 		EnableRequestValidation:  true,
 		EnableResponseValidation: false,
-=======
-		EnableRequestValidation:  false,
-		EnableResponseValidation: true,
->>>>>>> e316dd2 (WIP)
 	})
 
 	if err != nil {
@@ -101,11 +92,6 @@ func (p *Firetail) Filter(conf interface{}, res http.ResponseWriter, req pkgHTTP
 		req.Method(), string(req.Path()),
 		io.NopCloser(bytes.NewBuffer(body)),
 	))
-
-<<<<<<< HEAD
-	method      = req.Method()
-	path        = string(req.Path())
-	requestBody = string(body)
 
 	middlewareResponseBodyBytes, err := io.ReadAll(localResponseWriter.Body)
 
@@ -193,7 +179,6 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
                 }
 	}
 
-=======
 	middlewareResponseBodyBytes, err := io.ReadAll(localResponseWriter.Body)
 
 	res.Header().Add("X-Resp-A6-Runner", "Go")
@@ -201,7 +186,6 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
 	if err != nil {
 		log.Errorf("failed to write %s", err)
 	}
->>>>>>> e316dd2 (WIP)
 }
 
 func init() {
