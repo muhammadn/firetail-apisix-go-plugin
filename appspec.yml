@@ -15,7 +15,7 @@ paths:
     get:
       summary: Returns the status of the server
       responses:
-        "400":
+        "200":
           $ref: "#/components/responses/Healthy"
   /notfound:
     get:
