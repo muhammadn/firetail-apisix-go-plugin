@@ -7,7 +7,7 @@ paths:
     get:
       summary: Returns an index.html
       responses:
-        "200":
+        "400":
           description: An index.html file
           content:
             text/plain: {}
@@ -15,7 +15,7 @@ paths:
     get:
       summary: Returns the status of the server
       responses:
-        "400":
+        "200":
           $ref: "#/components/responses/Healthy"
   /notfound:
     get:
