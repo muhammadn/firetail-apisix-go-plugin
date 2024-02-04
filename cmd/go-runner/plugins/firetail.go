@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"io"
+	"time"
 
 	pkgHTTP "github.com/apache/apisix-go-plugin-runner/pkg/http"
 	"github.com/apache/apisix-go-plugin-runner/pkg/log"
@@ -13,6 +14,34 @@ import (
 
 	firetail "github.com/FireTail-io/firetail-go-lib/middlewares/http"
 )
+
+var method string
+var path   string
+var requestBody string
+
+
+type FiretailRequest struct {
+  Ip string
+  HttpProtocol string
+  Uri string
+  Resource string
+  Method string
+  Headers interface{}
+  Body string
+}
+
+type FiretailResponse struct {
+  StatusCode int
+  Body string
+  Headers interface{}
+}
+
+type FiretailPayload struct {
+  Version string
+  DateCreated int64
+  Request FiretailRequest
+  Response FiretailResponse
+}
 
 type Firetail struct {
 	plugin.DefaultPlugin
@@ -69,6 +98,10 @@ func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req 
 		io.NopCloser(bytes.NewBuffer(body)),
 	))
 
+	method      = req.Method()
+	path        = string(req.Path())
+	requestBody = string(body)
+
 	middlewareResponseBodyBytes, err := io.ReadAll(localResponseWriter.Body)
 
 	if err != nil {
@@ -106,7 +139,6 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
                 log.Errorf("Failed to initialise Firetail middleware, err:", err.Error())
         }
 
-
 	body, err := res.ReadBody()
 
         // Create a fake handler
@@ -123,7 +155,7 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
 
 	// Serve the request to the middlware
 	myMiddleware.ServeHTTP(localResponseWriter, httptest.NewRequest(
-		"GET", "/get",
+		method, path,
                 io.NopCloser(bytes.NewBuffer([]byte{})),
 	))
 
@@ -155,6 +187,7 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
                         log.Errorf("failed to write %s", err)
                 }
 	}
+
 }
 
 func init() {
