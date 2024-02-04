@@ -1,3 +1,5 @@
 *.swo
 *.swp
 .DS_Store
+/go-runner
+/logs
