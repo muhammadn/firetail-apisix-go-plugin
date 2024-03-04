@@ -8,9 +8,9 @@ import (
 	"time"
 	"os"
 
-	pkgHTTP "github.com/apache/apisix-go-plugin-runner/pkg/http"
-	"github.com/apache/apisix-go-plugin-runner/pkg/log"
-	"github.com/apache/apisix-go-plugin-runner/pkg/plugin"
+	pkgHTTP "firetail_apisix_plugin/pkg/http"
+	"firetail_apisix_plugin/pkg/log"
+	"firetail_apisix_plugin/pkg/plugin"
 	"bytes"
 
 	firetail "github.com/FireTail-io/firetail-go-lib/middlewares/http"
@@ -141,6 +141,7 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
 	// most request stuff is missing here
 	// need to find a way to get data from `pkgHTTP.Request`
 	// such as method/protocol/SrcIP(),req.Header() and Body from RequestFilter()
+
         payload := FiretailPayload{
                 Version: "1.0.0-alpha",
                 DateCreated: time.Now().UTC().Unix(),

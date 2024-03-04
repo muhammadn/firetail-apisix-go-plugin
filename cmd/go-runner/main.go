@@ -9,8 +9,8 @@ import (
 
 
         _ "firetail_apisix_plugin/cmd/go-runner/plugins"
-	"github.com/apache/apisix-go-plugin-runner/pkg/runner"
-	"github.com/apache/apisix-go-plugin-runner/pkg/log"
+	"firetail_apisix_plugin/pkg/runner"
+	"firetail_apisix_plugin/pkg/log"
 )
 
 const (
