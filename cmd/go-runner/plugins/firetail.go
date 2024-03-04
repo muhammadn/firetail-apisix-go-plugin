@@ -123,10 +123,6 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
 
 	resBody, err := res.ReadBody()
 
-	// most request stuff is missing here
-	// need to find a way to get data from `pkgHTTP.Request`
-	// such as method/protocol/SrcIP(),req.Header() and Body from RequestFilter()
-
 	resource, err := res.Var("request_uri")
 	if err != nil {
                 log.Errorf("Error getting request uri")
