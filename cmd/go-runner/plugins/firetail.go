@@ -36,6 +36,7 @@ func (p *Firetail) ParseConf(in []byte) (interface{}, error) {
 }
 
 func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req pkgHTTP.Request) {
+	log.Infof("Running RequestFilter...")
 	firetailMiddleware, err := firetail.GetMiddleware(&firetail.Options{
 		OpenapiSpecPath:          "./appspec.yml",
 		LogsApiToken:             "",
@@ -72,8 +73,6 @@ func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req 
 
 	headers := req.Header().View()
         for k, v := range headers {
-                // convert value (v) to comma-delimited values
-                // key "k" is still as it is
                 mockRequest.Header.Add(k, v[0])
         }
 
@@ -102,6 +101,8 @@ func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req 
 }
 
 func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
+        log.Infof("Running ResponseFilter...")
+
         firetailApiToken := os.Getenv("FIRETAIL_API_KEY")
         firetailUrl := os.Getenv("FIRETAIL_URL")
 
@@ -121,44 +122,26 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
                 log.Errorf("Failed to initialise Firetail middleware, err:", err.Error())
         }
 
+	// response body
 	resBody, err := res.ReadBody()
 
+        // request uri path
 	resource, err := res.Var("request_uri")
 	if err != nil {
                 log.Errorf("Error getting request uri")
 	}
 
+	// request method
         method, err := res.Var("request_method")
         if err != nil {
                 log.Errorf("Error getting request method")
         }
 
+	// request body
         reqBody, err := res.Var("request_body")
         if err != nil {
                 log.Errorf("Error getting request body")
         }
-
-	/*
-
-	ip, err := res.Var("remote_addr")
-	if err != nil {
-                log.Errorf("Error getting remote address")
-	} 
-
-	protocol, err := res.Var("server_protocol")
-	if err != nil {
-                log.Errorf("Error getting server protocol")
-	}
-
-	scheme, err := res.Var("scheme")
-	if err != nil {
-                log.Errorf("Error getting scheme")
-	}
-
-	host, err := res.Var("http_host")
-	if err != nil {
-	        log.Errorf("Error getting http host")
-	} */
 
         // Create a fake handler
         myHandler := &stubHandler{
@@ -192,21 +175,12 @@ func (p *Firetail) ResponseFilter(conf interface{}, res pkgHTTP.Response) {
 	}
 
 	if localResponseWriter.Code != res.StatusCode() {
-		//log.Errorf("Middleware altered status code from %d to %d", res.StatusCode, localResponseWriter.Code)
+		log.Errorf("Middleware altered status code from %d to %d", res.StatusCode, localResponseWriter.Code)
 
                 _, err = res.Write(middlewareResponseBodyBytes)
                 if err != nil {
                         log.Errorf("failed to write %s", err)
 		}
-	}
-
-	if string(middlewareResponseBodyBytes) != string(resBody) {
-		//log.Errorf("Middleware altered response body, original: %s, new: %s", string(body), string(middlewareResponseBodyBytes))
-
-                _, err = res.Write(middlewareResponseBodyBytes)
-                if err != nil {
-                        log.Errorf("failed to write %s", err)
-                }
 	}
 
 	if err != nil {
