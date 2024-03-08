@@ -1,6 +1,6 @@
 module firetail_apisix_plugin
 
-go 1.21.6
+go 1.21
 
 require (
 	github.com/FireTail-io/firetail-go-lib v0.0.0
@@ -10,7 +10,7 @@ require (
 
 require (
 	github.com/ReneKroon/ttlcache/v2 v2.4.0 // indirect
-	github.com/api7/ext-plugin-proto v0.6.0 // indirect
+	github.com/api7/ext-plugin-proto v0.6.1 // indirect
 	github.com/getkin/kin-openapi v0.110.0 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect
