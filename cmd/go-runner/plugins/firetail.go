@@ -82,8 +82,6 @@ func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req 
 	middlewareResponseBodyBytes, err := io.ReadAll(localResponseWriter.Body)
 
 	if err != nil {
-		log.Errorf("Failed to read request body bytes from middleware, err: ", err.Error())
-
                 _, err = res.Write(middlewareResponseBodyBytes)
                 if err != nil {
                         log.Errorf("failed to write %s", err)
@@ -91,8 +89,6 @@ func (p *Firetail) RequestFilter(conf interface{}, res http.ResponseWriter, req 
 	}
 
 	if string(middlewareResponseBodyBytes) != string(placeholderResponse) {
-		log.Errorf("Middleware altered response body, original: %s, new: %s", string(placeholderResponse), string(middlewareResponseBodyBytes))
-
                 _, err = res.Write(middlewareResponseBodyBytes)
                 if err != nil {
                         log.Errorf("failed to write %s", err)
