@@ -50,9 +50,8 @@ github.com/alvaroloes/enumer v1.1.2/go.mod h1:FxrjvuXoDAx9isTJrv4c+T410zFi0DtXIT
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/apache/apisix-go-plugin-runner v0.5.0 h1:kg2FpLWdbrzGXwS6wc6etwZa7tpd//R9q1HMUwUEd34=
 github.com/apache/apisix-go-plugin-runner v0.5.0/go.mod h1:KEdzfoWik+m5JTOnYoV1X/QWat1vmcchzCjhyy68XZE=
+github.com/api7/ext-plugin-proto v0.6.0 h1:xmgcKwWRiM9EpBIs1wYJ7Ife/YnLl4IL2NEy4417g60=
 github.com/api7/ext-plugin-proto v0.6.0/go.mod h1:8dbdAgCESeqwZ0IXirbjLbshEntmdrAX3uet+LW3jVU=
-github.com/api7/ext-plugin-proto v0.6.1 h1:eQN0oHacL97ezVGWVmsRigt+ClcpgjipUq0rmW8BG4g=
-github.com/api7/ext-plugin-proto v0.6.1/go.mod h1:8dbdAgCESeqwZ0IXirbjLbshEntmdrAX3uet+LW3jVU=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmVTwzkszR9V5SSuryQ31EELlFMUz1kKyl939pY=
