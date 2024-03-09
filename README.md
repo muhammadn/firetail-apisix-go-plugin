@@ -17,50 +17,31 @@ and restart apisix `apisix restart`
 
 ### Testing
 
-#### Enable firetail request filtering via apisix API:
+#### Enable both firetail request and response filtering via apisix API:
 
 **NOTE** You will need to run your application at localhost (127.0.0.1) port 1980. If you wish to point it elsewhere, change the "nodes" parameter from example below.
  
 ```
 curl http://127.0.0.1:9180/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
 {
-  "uri": "/health",
+  "uri": "/profile/alice/comment",
   "plugins": {
     "ext-plugin-pre-req": {
       "conf": [
-        {"name":"firetail", "value":"{\"body\":\"\"}"}     
+        {"name":"firetail", "value":"{\"body\":\"\"}"}         
       ]
-    }
-  },
-  "upstream": {
-        "type": "roundrobin",
-        "nodes": {
-            "127.0.0.1:1980": 1
-        }
-    }
-}
-'
-```
-
-#### Enable firetail response filtering via apisix API:
-
-```
-curl http://127.0.0.1:9180/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
-{
-  "uri": "/health",
-  "plugins": {
+    },
     "ext-plugin-post-resp": {
       "conf": [
-        {"name":"firetail", "value":"{\"body\":\"\"}"}     
+        {"name":"firetail", "value":"{\"body\":\"\"}"}      
       ]
     }
   },
   "upstream": {
-        "type": "roundrobin",
-        "nodes": {
-            "127.0.0.1:1980": 1
-        }
+    "type": "roundrobin",
+      "nodes": {
+        "127.0.0.1:1980": 1
     }
-}
-'
+  }
+}'
 ```
